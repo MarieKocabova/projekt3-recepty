@@ -16,7 +16,8 @@ function getList() {
     for (let i = 0; i < recepty.length; i++) {
         let singleRecept = document.createElement('div');
         singleRecept.setAttribute ("class", "recept");
-        singleRecept.onclick = clickOnRecept;
+        singleRecept.setAttribute("data-receptIndex", recepty.indexOf(recepty[i]))
+        singleRecept.setAttribute ("onclick", "clickOnRecept(this)");
 
         let thumbnail = document.createElement('div');
         thumbnail.setAttribute ("class", "recept-obrazek");
@@ -50,8 +51,9 @@ function getList() {
 //4) Doplň řazení receptů podle hodnocení.
 
 //5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu. Doplň patričné údaje receptu do HTML prvků s ID recept-foto, recept-kategorie, recept-hodnoceni, recept-nazev, recept-popis.
-function clickOnRecept() {
-
+function clickOnRecept(selected) {
+    let indexSelected = selected.getAttribute("data-receptIndex")
+    console.log(indexSelected)
 }
 
 //6) Poslední vybraný recept ulož do Local Storage, aby se při novém otevření aplikace načetl.
