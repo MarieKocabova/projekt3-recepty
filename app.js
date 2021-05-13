@@ -71,7 +71,7 @@ function compareCategory() {
     
     for (i=0; i<recepty.length; i++) {
                         
-        if (selectedCategory === recepty[i].stitek) {
+        if (selectedCategory === recepty[i].stitek || selectedCategory === '') {
             receptyToDisplay = [];
             receptyToDisplay.push(recepty[i]);
 
