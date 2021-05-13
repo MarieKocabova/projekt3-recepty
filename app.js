@@ -71,10 +71,50 @@ function compareCategory() {
     }     
 }
 
-//4) Doplň řazení receptů podle hodnocení. možná tady: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_localecompare
+//4) Doplň řazení receptů podle hodnocení. opsáno tady: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+
+function asc (a,b) {
+    if (a.hodnoceni < b.hodnoceni) {
+        return -1;
+    }
+    if (a.hodnoceni > b.hodnoceni) {
+        return 1;
+    }
+    return 0;
+}
+
+function desc (a,b) {
+    if (a.hodnoceni > b.hodnoceni) {
+        return -1;
+    }
+    if (a.hodnoceni < b.hodnoceni) {
+        return 1;
+    }
+    return 0;
+}
 
 function sortRating() {
-
+    receptyList.innerHTML = '';
+    let selectedRating = document.getElementById("razeni").value;
+    
+    for (i=0; i<recepty.length; i++) {
+                        
+        if (selectedRating == '') {
+            recepty.sort();
+            receptyToDisplay = recepty;
+            receptyToDisplay.forEach(getList);
+        } 
+        if (selectedRating == "1") {
+            recepty.sort(desc);
+            receptyToDisplay = recepty;
+            receptyToDisplay.forEach(getList);
+        } 
+        if (selectedRating == "2") {
+            recepty.sort(asc);
+            receptyToDisplay = recepty;
+            receptyToDisplay.forEach(getList);
+        }
+    }     
 }
 
 //5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu. Doplň patričné údaje receptu do HTML prvků s ID recept-foto, recept-kategorie, recept-hodnoceni, recept-nazev, recept-popis.
