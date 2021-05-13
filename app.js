@@ -100,9 +100,7 @@ function sortRating() {
     for (i=0; i<recepty.length; i++) {
                         
         if (selectedRating == '') {
-            recepty.sort();
-            receptyToDisplay = recepty;
-            receptyToDisplay.forEach(getList);
+            location.reload();
         } 
         if (selectedRating == "1") {
             recepty.sort(desc);
@@ -117,7 +115,8 @@ function sortRating() {
     }     
 }
 
-//5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu. Doplň patričné údaje receptu do HTML prvků s ID recept-foto, recept-kategorie, recept-hodnoceni, recept-nazev, recept-popis.
+//5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu.
+
 function clickOnRecept(selected) {
     let indexSelected = selected.getAttribute("data-receptIndex")
 
@@ -126,6 +125,20 @@ function clickOnRecept(selected) {
     document.querySelector('#recept-hodnoceni').innerHTML = recepty[indexSelected].hodnoceni;
     document.querySelector('#recept-nazev').innerHTML = recepty[indexSelected].nadpis;
     document.querySelector('#recept-popis').innerHTML = recepty[indexSelected].popis;
+
+    let receptSelected = recepty[indexSelected]
+    
+    localStorage.clear();
+    localStorage.receptSelected = JSON.stringify(receptSelected);
+
 }
 
 //6) Poslední vybraný recept ulož do Local Storage, aby se při novém otevření aplikace načetl.
+
+let receptFromLocal = JSON.parse(localStorage.receptSelected);
+
+document.querySelector('#recept-foto').src = receptFromLocal.img;
+    document.querySelector('#recept-kategorie').innerHTML = receptFromLocal.kategorie;
+    document.querySelector('#recept-hodnoceni').innerHTML = receptFromLocal.hodnoceni;
+    document.querySelector('#recept-nazev').innerHTML = receptFromLocal.nadpis;
+    document.querySelector('#recept-popis').innerHTML = receptFromLocal.popis;
