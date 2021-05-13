@@ -1,12 +1,3 @@
-/* 
-const detailReceptDiv = document.querySelector('.recept-detail');
-const detailImg = document.querySelector('#recept-foto');
-const detailTitle = document.querySelector('#recept-nazev');
-const detailDescr = document.querySelector('#recept-popis');
-const metaKategory = document.querySelector('#recept-kategorie');
-const metaRating = document.querySelector('#recept-hodnoceni'); 
-*/
-
 const receptyList = document.querySelector('.recepty');
 let receptyToDisplay = recepty;
 
@@ -89,7 +80,12 @@ function sortRating() {
 //5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu. Doplň patričné údaje receptu do HTML prvků s ID recept-foto, recept-kategorie, recept-hodnoceni, recept-nazev, recept-popis.
 function clickOnRecept(selected) {
     let indexSelected = selected.getAttribute("data-receptIndex")
-    console.log(indexSelected)
+
+    document.querySelector('#recept-foto').src = recepty[indexSelected].img;
+    document.querySelector('#recept-kategorie').innerHTML = recepty[indexSelected].kategorie;
+    document.querySelector('#recept-hodnoceni').innerHTML = recepty[indexSelected].hodnoceni;
+    document.querySelector('#recept-nazev').innerHTML = recepty[indexSelected].nadpis;
+    document.querySelector('#recept-popis').innerHTML = recepty[indexSelected].popis;
 }
 
 //6) Poslední vybraný recept ulož do Local Storage, aby se při novém otevření aplikace načetl.
