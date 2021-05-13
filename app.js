@@ -88,23 +88,15 @@ inputHledat.addEventListener('change', compareString)
 function compareString() {
     receptyList.innerHTML = '';
     console.log(inputHledat.value);
+   
+    for (i=0; i<recepty.length; i++) {             
+        if (recepty[i].nadpis.includes(inputHledat.value)) {
+            receptyToDisplay = [];
+            receptyToDisplay.push(recepty[i]);
 
-    //receptyToDisplay = [];
-    
-    for (i=0; i<receptyToDisplay.length; i++) {
-        /* if(isNaN(inputHledat.value)) {
-            receptyToDisplay = recepty; */
-        receptyToDisplay = [];
-        if (receptyToDisplay[i].nadpis.includes(inputHledat.value)) {
-            receptyToDisplay.push(receptyToDisplay[i])
+            receptyToDisplay.forEach(getList);
         } 
-    }
-     
-    
-
-    //receptyToDisplay = [recepty[3], recepty[5], recepty[8]]
-    receptyToDisplay.forEach(getList);
-    
+    }     
 } 
 
 //3) Doplň filtrovanání receptů podle kategorie. asi tady: https://www.w3schools.com/jsref/event_onchange.asp
