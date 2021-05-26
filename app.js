@@ -1,5 +1,6 @@
 const receptyList = document.querySelector('.recepty');
 let receptyToDisplay = recepty;
+const vychoziRecepty = Array.from(recepty);
 
 //1) Do prvku s id="recepty" vygeneruj z dat seznam všech receptů z naší "databáze".
 
@@ -8,35 +9,35 @@ receptyToDisplay.forEach(getList);
 function getList(ele) {
     
     let singleRecept = document.createElement('div');
-        singleRecept.setAttribute ("class", "recept");
-        singleRecept.setAttribute("data-receptIndex", recepty.indexOf(ele))
-        singleRecept.setAttribute ("onclick", "clickOnRecept(this)");
+    singleRecept.setAttribute ("class", "recept");
+    singleRecept.setAttribute("data-receptIndex", recepty.indexOf(ele))
+    singleRecept.setAttribute ("onclick", "clickOnRecept(this)");
 
-        let thumbnail = document.createElement('div');
-        thumbnail.setAttribute ("class", "recept-obrazek");
+    let thumbnail = document.createElement('div');
+    thumbnail.setAttribute ("class", "recept-obrazek");
 
-        let thumbnailImg = document.createElement('img');
-        thumbnailImg.src = ele.img;
+    let thumbnailImg = document.createElement('img');
+    thumbnailImg.src = ele.img;
 
-        let listTitle = document.createElement('div');
-        listTitle.setAttribute ("class", "recept-info");
+    let listTitle = document.createElement('div');
+    listTitle.setAttribute ("class", "recept-info");
 
-        let listTitleText = document.createElement('h3');
-        listTitleText.innerHTML = ele.nadpis;
+    let listTitleText = document.createElement('h3');
+    listTitleText.innerHTML = ele.nadpis;
 
-        listTitle.appendChild(listTitleText);
-        thumbnail.appendChild(thumbnailImg);
+    listTitle.appendChild(listTitleText);
+    thumbnail.appendChild(thumbnailImg);
 
-        singleRecept.appendChild(thumbnail);
-        singleRecept.appendChild(listTitle);
+    singleRecept.appendChild(thumbnail);
+    singleRecept.appendChild(listTitle);
 
-        receptyList.appendChild(singleRecept);
+    receptyList.appendChild(singleRecept);
 }
 
 //2) Pri kliknutí na tlačítko Hledat by se měl seznam receptů vyfiltrovat podle hledaného slova.
 
 let inputHledat = document.querySelector('input[id=hledat]');
-inputHledat.addEventListener('change', compareString)
+inputHledat.addEventListener('input', compareString)
 
 function compareString() {
     receptyList.innerHTML = '';
@@ -96,23 +97,25 @@ function desc (a,b) {
 function sortRating() {
     receptyList.innerHTML = '';
     let selectedRating = document.getElementById("razeni").value;
-    
-    for (i=0; i<recepty.length; i++) {
-                        
-        if (selectedRating == '') {
-            location.reload();
-        } 
-        if (selectedRating == "1") {
-            recepty.sort(desc);
-            receptyToDisplay = recepty;
-            receptyToDisplay.forEach(getList);
-        } 
-        if (selectedRating == "2") {
-            recepty.sort(asc);
-            receptyToDisplay = recepty;
-            receptyToDisplay.forEach(getList);
-        }
-    }     
+
+    if (selectedRating == '') {
+        receptyToDisplay = vychoziRecepty;
+        receptyToDisplay.forEach(getList);
+    } else {
+        for (i=0; i<recepty.length; i++) {
+            let sortedRecept = recepty
+                            
+            if (selectedRating == "1") {
+                sortedRecept.sort(desc);
+                receptyToDisplay = sortedRecept;
+                receptyToDisplay.forEach(getList);
+            } else if (selectedRating == "2") {
+                sortedRecept.sort(asc);
+                receptyToDisplay = sortedRecept;
+                receptyToDisplay.forEach(getList);
+            }
+        }     
+    }   
 }
 
 //5) Na recepty v seznamu by mělo jít kliknout a na pravé polovině, se objeví detail receptu.
@@ -130,7 +133,6 @@ function clickOnRecept(selected) {
     
     localStorage.clear();
     localStorage.receptSelected = JSON.stringify(receptSelected);
-
 }
 
 //6) Poslední vybraný recept ulož do Local Storage, aby se při novém otevření aplikace načetl.
